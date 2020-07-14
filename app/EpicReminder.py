@@ -1,6 +1,6 @@
 # Script: EpicReminder.py
 # Developer: Ron Egli
-# Version: 1.0.1
+# Version: 1.0.2
 # Purpose: Pulls Epic's site on a regular interval, checks for changes, if changes to free games are detected it sends a remminder via Discord
 
 import requests
@@ -52,7 +52,7 @@ def saveHash(newhash):
 
 def pullLatest():
     # Build the browser
-    driver = webdriver.Chrome('./chromedriver', chrome_options=options)
+    driver = webdriver.Chrome('./chromedriver', options=options)
     # Fetch the page
     driver.get("https://www.epicgames.com/store/en-US/")
     # Find the free games div
