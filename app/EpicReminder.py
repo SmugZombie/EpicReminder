@@ -1,6 +1,6 @@
 # Script: EpicReminder.py
 # Developer: Ron Egli
-# Version: 1.0.0
+# Version: 1.0.1
 # Purpose: Pulls Epic's site on a regular interval, checks for changes, if changes to free games are detected it sends a remminder via Discord
 
 import requests
@@ -17,7 +17,9 @@ load_dotenv('.env')
 
 #Build Chrome Options
 options = Options()
-options.headless = True
+options.add_argument('--headless')
+options.add_argument('--no-sandbox')
+options.add_argument('--disable-dev-shm-usage')
 
 DISCORDWEBHOOK = str(os.getenv('DISCORDWEBHOOK'))
 if DISCORDWEBHOOK == "":
