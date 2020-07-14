@@ -8,9 +8,12 @@ ADD app/requirements.txt /
 # Get required libraries
 RUN pip3 install -r /requirements.txt
 # Copy over the rest of the app
-ADD app/ /
+ADD app/ /app
+# Give user ownership
+RUN chown -R epicreminder /app
 # Switch to non privledged user
 USER epicreminder
+WORKDIR "/app"
 # Run the script
-CMD [ "python3", "./EpicReminder.py" ]
+CMD [ "python3", "/app/EpicReminder.py" ]
 

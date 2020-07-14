@@ -26,7 +26,7 @@ if DISCORDWEBHOOK == "":
     print("Invalid Webhook Provided")
     sys.exit()
 
-SLEEPTIME = 60
+SLEEPTIME = 30
 
 def compareHash(newhash):
     try:
@@ -57,6 +57,14 @@ def pullLatest():
     driver.get("https://www.epicgames.com/store/en-US/")
     # Find the free games div
     gamesdiv = driver.find_element_by_class_name('css-decuci')
+    # Debug
+    print("-----------Debug----------------")
+    print(gamesdiv.text)
+    print("-----------Debug----------------")
+    if len(gamesdiv.text) <= 40:
+        print("String not long enough, Breaking")
+        driver.close()
+        return
     # Replace the results / format for prettiness
     gamesdiv = gamesdiv.text.replace("VIEW MORE","").replace("FREE NOW","").replace("COMING SOON","\nCOMING SOON").replace("\nFree"," - Free").replace("\n\n", "\n").replace("\n\n", "\n").replace("Free Games","--- FREE EPIC GAMES ---")
     # Hash it, to double check
@@ -64,7 +72,9 @@ def pullLatest():
     # Add a link
     gamesdiv = gamesdiv + "\nhttps://www.epicgames.com/store/en-US/"
     # Debug
+    print("-----------Debug--Cleaned------")
     print(gamesdiv)
+    print("-----------Debug----------------")
     # Close the browser
     driver.close()
     # If the hash doesn't match, proceed
