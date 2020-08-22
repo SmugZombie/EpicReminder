@@ -24,9 +24,12 @@ options.add_argument('--disable-dev-shm-usage')
 DISCORDWEBHOOK = str(os.getenv('DISCORDWEBHOOK'))
 if DISCORDWEBHOOK == "":
     print("Invalid Webhook Provided")
-    #sys.exit()
+    sys.exit()
 
-SLEEPTIME = os.getenv('SLEEPTIME');
+try:
+    SLEEPTIME = int(os.getenv('SLEEPTIME'))
+except:
+    SLEEPTIME = 7200
 
 def compareHash(newhash):
     try:
@@ -100,6 +103,7 @@ def main():
     pullLatest()
     print("Sleeping for: " + str(SLEEPTIME) + " Seconds")
     time.sleep(SLEEPTIME)
-    main()
+    sys.exit(1)
+    #main()
 
 main()
