@@ -26,7 +26,7 @@ if DISCORDWEBHOOK == "":
     print("Invalid Webhook Provided")
     sys.exit()
 
-SLEEPTIME = 30
+SLEEPTIME = process.env.SLEEPTIME;
 
 def compareHash(newhash):
     try:
@@ -82,7 +82,7 @@ def pullLatest():
         # Send the latest to Discord
         sendToDiscord(gamesdiv)
         # Save the hash so we don't send it again
-        saveHash(newhash)
+        # saveHash(newhash)
 
 def sendToDiscord(gamesdiv):
     data = {}
