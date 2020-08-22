@@ -24,9 +24,9 @@ options.add_argument('--disable-dev-shm-usage')
 DISCORDWEBHOOK = str(os.getenv('DISCORDWEBHOOK'))
 if DISCORDWEBHOOK == "":
     print("Invalid Webhook Provided")
-    sys.exit()
+    #sys.exit()
 
-SLEEPTIME = process.env.SLEEPTIME;
+SLEEPTIME = os.getenv('SLEEPTIME');
 
 def compareHash(newhash):
     try:
@@ -56,7 +56,7 @@ def pullLatest():
     # Fetch the page
     driver.get("https://www.epicgames.com/store/en-US/")
     # Find the free games div
-    gamesdiv = driver.find_element_by_class_name('css-decuci')
+    gamesdiv = driver.find_element_by_class_name('css-1x2owq5-DiscoverContainerHighlighted__root')
     # Debug
     print("-----------Debug----------------")
     print(gamesdiv.text)
