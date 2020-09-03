@@ -32,18 +32,30 @@ try:
 except:
     SLEEPTIME = 7200
 
-def compareHash(newhash):
+def getCurrentHash():
     global hash
-    #try:
-    #    with open(".lastHash", 'r') as hashfile:
-    #        oldhash = hashfile.readline()
-    #except FileNotFoundError as e:
-    #    print(e)
-    #    with open(".lastHash", 'w') as hashfile:
-    #        oldhash = ""
-    #        hashfile.write("")
-    #except Exception as e:
-    #    print(e)
+    url = "https://playground.alreadydev.com/epic/"
+
+    payload = {}
+    headers = {}
+
+    response = requests.request("GET", url, headers=headers, data = payload)
+
+    hash = response.text
+
+def setCurrentHash(newHash):
+    global hash
+    url = "https://playground.alreadydev.com/epic/?hash=" + newHash
+
+    payload = {}
+    headers = {}
+
+    response = requests.request("GET", url, headers=headers, data = payload)
+
+    hash = response.text
+
+def compareHash(newhash):
+    getCurrentHash()
 
     oldhash = hash
 
@@ -54,7 +66,7 @@ def compareHash(newhash):
     if oldhash == newhash:
         return False
     else:
-        hash = newhash
+        setCurrentHash(newhash)
         return True
 
 def saveHash(newhash):
