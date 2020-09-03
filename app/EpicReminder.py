@@ -14,6 +14,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from dotenv import load_dotenv
 load_dotenv('.env')
+hash = ""
 
 #Build Chrome Options
 options = Options()
@@ -32,13 +33,19 @@ except:
     SLEEPTIME = 7200
 
 def compareHash(newhash):
-    try:
-        with open(".lastHash", 'r') as hashfile:
-            oldhash = hashfile.readline()
-    except FileNotFoundError as e:
-        with open(".lastHash", 'w') as hashfile:
-            oldhash = ""
-            hashfile.write("")
+    global hash
+    #try:
+    #    with open(".lastHash", 'r') as hashfile:
+    #        oldhash = hashfile.readline()
+    #except FileNotFoundError as e:
+    #    print(e)
+    #    with open(".lastHash", 'w') as hashfile:
+    #        oldhash = ""
+    #        hashfile.write("")
+    #except Exception as e:
+    #    print(e)
+
+    oldhash = hash
 
     # Debug
     print("New: " + newhash)
@@ -47,6 +54,7 @@ def compareHash(newhash):
     if oldhash == newhash:
         return False
     else:
+        hash = newhash
         return True
 
 def saveHash(newhash):
@@ -103,7 +111,7 @@ def main():
     pullLatest()
     print("Sleeping for: " + str(SLEEPTIME) + " Seconds")
     time.sleep(SLEEPTIME)
-    sys.exit(1)
-    #main()
+    #sys.exit(1)
+    main()
 
 main()
