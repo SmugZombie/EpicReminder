@@ -1,5 +1,5 @@
 #!/bin/bash
-version=1.0.2
+version=1.0.3
 tag=smugzombie/epicreminder
 name=epicreminder
 
@@ -24,3 +24,4 @@ docker build -t $tag:$version .
 # Run the image
 docker run -td --restart unless-stopped --name $name $tag:$version
 
+docker logs $name --follow
