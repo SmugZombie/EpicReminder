@@ -4,7 +4,7 @@ tag=smugzombie/epicreminder
 name=epicreminder
 
 # Check if running
-running=$(docker ps | grep "$name" | awk {'print $1'})
+running=$(docker ps -a | grep "$name" | awk {'print $1'})
 
 echo $running
 
