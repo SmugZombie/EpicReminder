@@ -1,6 +1,6 @@
 # Script: EpicReminder.py
 # Developer: Ron Egli
-# Version: 1.0.2
+# Version: 1.0.3
 # Purpose: Pulls Epic's site on a regular interval, checks for changes, if changes to free games are detected it sends a remminder via Discord
 
 import requests
@@ -63,6 +63,8 @@ def compareHash(newhash):
     print("New: " + newhash)
     print("Old: " + oldhash)
 
+    if oldhash == "pause":
+        return False
     if oldhash == newhash:
         return False
     else:
@@ -106,12 +108,14 @@ def pullLatest():
         sendToDiscord(gamesdiv)
         # Save the hash so we don't send it again
         # saveHash(newhash)
+    else:
+        print("Skipping")
 
 def sendToDiscord(gamesdiv):
     data = {}
     data['content'] = gamesdiv
 
-    url = DISCORDWEBHOOK 
+    url = DISCORDWEBHOOK
 
     payload = json.dumps(data)
     headers = { 'Content-Type': 'application/json' }
@@ -120,10 +124,12 @@ def sendToDiscord(gamesdiv):
     print(response.text.encode('utf8'))
 
 def main():
+    print("main")
     pullLatest()
     print("Sleeping for: " + str(SLEEPTIME) + " Seconds")
     time.sleep(SLEEPTIME)
     #sys.exit(1)
     main()
 
+print("Running Script")
 main()
