@@ -81,7 +81,7 @@ def pullLatest():
     # Fetch the page
     driver.get("https://www.epicgames.com/store/en-US/")
     # Find the free games div
-    gamesdiv = driver.find_element_by_class_name('css-1x2owq5-DiscoverContainerHighlighted__root')
+    gamesdiv = driver.find_element_by_class_name(str(os.getenv('MONITOR')))
     # Debug
     print("-----------Debug----------------")
     print(gamesdiv.text)
