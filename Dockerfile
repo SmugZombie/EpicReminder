@@ -12,7 +12,7 @@ ADD app/ /app
 # Give user ownership
 RUN chown -R epicreminder /app
 # Switch to non privledged user
-USER epicreminder
+# USER epicreminder
 WORKDIR "/app"
 # Run the script
 CMD [ "python3", "/app/EpicReminder.py" ]

@@ -9,6 +9,7 @@ import hashlib
 import sys
 import os
 import time
+import datetime
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
@@ -76,6 +77,7 @@ def saveHash(newhash):
         hashfile.write(newhash)
 
 def pullLatest():
+    now = str(datetime.datetime.now())
     # Build the browser
     driver = webdriver.Chrome('./chromedriver', options=options)
     # Fetch the page
@@ -83,6 +85,7 @@ def pullLatest():
     # Find the free games div
     gamesdiv = driver.find_element_by_class_name(str(os.getenv('MONITOR')))
     # Debug
+    print(now)
     print("-----------Debug----------------")
     print(gamesdiv.text)
     print("-----------Debug----------------")
@@ -109,7 +112,7 @@ def pullLatest():
         # Save the hash so we don't send it again
         # saveHash(newhash)
     else:
-        print("Skipping")
+        print(now + " Skipping")
 
 def sendToDiscord(gamesdiv):
     data = {}
