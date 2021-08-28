@@ -1,6 +1,6 @@
 # Script: EpicReminder.py
 # Developer: Ron Egli
-# Version: 1.0.4
+# Version: 1.0.5
 # Purpose: Pulls Epic's site on a regular interval, checks for changes, if changes to free games are detected it sends a remminder via Discord
 
 import requests
@@ -14,7 +14,6 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-#from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
 load_dotenv('.env')
 hash = ""
@@ -38,28 +37,21 @@ except:
 def getCurrentHash():
     global hash
     url = "https://playground.alreadydev.com/epic/"
-
     payload = {}
     headers = {}
-
     response = requests.request("GET", url, headers=headers, data = payload)
-
     hash = response.text
 
 def setCurrentHash(newHash):
     global hash
     url = "https://playground.alreadydev.com/epic/?hash=" + newHash
-
     payload = {}
     headers = {}
-
     response = requests.request("GET", url, headers=headers, data = payload)
-
     hash = response.text
 
 def compareHash(newhash):
     getCurrentHash()
-
     oldhash = hash
 
     # Debug
@@ -81,13 +73,18 @@ def saveHash(newhash):
 def pullLatest():
     now = str(datetime.datetime.now())
     # Build the browser
-    #driver = webdriver.Chrome('./chromedriver', options=options)
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     # Fetch the page
     driver.get("https://www.epicgames.com/store/en-US/")
-    # Find the free games div
-    gamesdiv = driver.find_element_by_class_name(str(os.getenv('MONITOR')))
-    # gamesdiv = driver.find_element_by_xpath("//div[@component='DiscoverContainerHighlighted']"); 
+    
+    try:
+        # Find the free games div
+        gamesdiv = driver.find_element_by_class_name(str(os.getenv('MONITOR')))
+    except:
+        print("Unable to locate class: " + str(os.getenv('MONITOR')))
+        sendToDiscord("Uhoh. I can't find the defined class ( " + str(os.getenv('MONITOR')) + " ). Time to reconfigure me!")
+        return
+
     # Debug
     print(now)
     print("-----------Debug----------------")
